@@ -1,41 +1,27 @@
-"""
-This is a echo bot.
-It echoes any incoming text messages.
-"""
-
-import logging
 import hashlib
+import logging
 
-from aiogram import Bot, Dispatcher, executor, types
+from aiogram import Bot, Dispatcher, executor
 from aiogram.types import InlineQuery, \
     InputTextMessageContent, InlineQueryResultArticle
 
 API_TOKEN = '1701635975:AAG2a6f1_Wk7HHHx0ZrstKt-8BRA15IJavY'
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
-# Initialize bot and dispatcher
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
 
-@dp.message_handler(commands=['start', 'help'])
-async def send_welcome(message: types.Message):
-    """
-    This handler will be called when user sends `/start` or `/help` command
-    """
-    await message.reply("Ку) Напиши любое слово, чтобы начать")
-
-
-
-@dp.message_handler()
-async def echo(message: types.Message):
-    # old style:
-    # await bot.send_message(message.chat.id, message.text)
-
-    await message.answer("Привет! Я - пидорас(шучу)! Крч, скажи, ты готов начать подготовку к гачи битве?")
-    text = InlineQuery.query or 'echo'
+@dp.inline_handler()
+async def inline_echo(inline_query: InlineQuery):
+    # id affects both preview and content,
+    # so it has to be unique for each result
+    # (Unique identifier for this result, 1-64 Bytes)
+    # you can set your unique id's
+    # but for example i'll generate it based on text because I know, that
+    # only text will be passed in this example
+    text = inline_query.query or 'echo'
     input_content = InputTextMessageContent(text)
     result_id: str = hashlib.md5(text.encode()).hexdigest()
     item = InlineQueryResultArticle(
@@ -45,7 +31,6 @@ async def echo(message: types.Message):
     )
     # don't forget to set cache_time=1 for testing (default is 300s or 5m)
     await bot.answer_inline_query(inline_query.id, results=[item], cache_time=1)
-
 
 
 if __name__ == '__main__':
