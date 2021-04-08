@@ -6,10 +6,20 @@ tokens = tokenizer.split('всё очень плохо')  # [('всё', None), (
 
 model = FastTextSocialNetworkModel(tokenizer=tokenizer)
 
+ids = [
+    '834924982',
+    '472348234',
+    '472348234'
+]
 messages = [
     'день прошел отлично',
     'ну так себе',
     'норм'
+]
+mood = [
+    'happy+=0,1',
+    'neutral+=0,2; negative+=0,1',
+    'neutral+=0,2; positive+=0,05'
 ]
 
 results = model.predict(messages, k=2)
