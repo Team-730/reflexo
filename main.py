@@ -3,7 +3,8 @@ import database as db
 
 
 bot = telebot.TeleBot('1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o')
-db.getText()
+print(db.getText())
+print(db.getAll())
 
 
 @bot.message_handler(commands = ['start', 'help'])
