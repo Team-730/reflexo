@@ -22,13 +22,8 @@ except Exception as e:
 def AddUser(id):
     db = sqlite3.connect("users.db")
     sql = db.cursor()
-    try:
-        sql.execute(f"SELECT id FROM users WHERE id = '{id}' ")
-        if sql.fetchone() is None:
-            sql.execute("SELECT id FROM users")
-            sql.execute(f"INSERT INTO users VALUES (?, ?, ?, ?)", (id, '', '', datetime.date.today()))
-
-    except:
+    sql.execute(f""" SELECT id FROM users WHERE id = {id} """)
+    if sql.fetchone() == None:
         sql.execute("SELECT id FROM users")
         sql.execute(f"INSERT INTO users VALUES (?, ?, ?, ?)", (id, '', '', datetime.date.today()))
     db.commit()
@@ -76,22 +71,11 @@ def getAll():
     try:
         db = sqlite3.connect("users.db")
         sql = db.cursor()
-        sql.execute(f'SELECT num, id FROM users ORDER BY num')
-        return sql.fetchall()
-    except:
-        pass
-
-
-def getId(num):
-    try:
-        db = sqlite3.connect("users.db")
-        sql = db.cursor()
-        sql.execute(f'SELECT id FROM users WHERE num = {num} ')
-        id = sql.fetchone()
-        print(sql.fetchall())
-        return id[num]
-    except:
-        pass
+        sql.execute(f'SELECT id FROM users')
+        id = sql.fetchall()
+        return id
+    except Exception as e:
+        print(e)
 
 #message
 def AddMessage(id, text):
