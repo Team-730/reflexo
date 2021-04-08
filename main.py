@@ -3,11 +3,12 @@ import database as db
 
 
 bot = telebot.TeleBot('1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o')
+db.getText()
 
 
 @bot.message_handler(commands = ['start', 'help'])
 def start(message):
-    bot.send_message(message.chat.id, f'Привет, {message.from_user.first_name}! Я бот, созданный чтобы вы могли выразить ваши эмоции и поделиться своими проблемами или успехами.')
+    bot.send_message(message.chat.id, f'Привет, {message.from_user.first_name}! Я бот созданый чтобы вы могли выразть ваши эмоции и поделиться своими проблемами или успехоми.')
     bot.send_message(message.chat.id, 'Напиши о том что ты чувствуешь, или чем бы ты хотел поделиться.')
     print(message.from_user.first_name)
     db.AddUser(message.from_user.id)

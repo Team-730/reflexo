@@ -13,7 +13,7 @@ except Exception as e:
 
 try:
     sql.execute("""CREATE TABLE message
-                      (id, text)
+                      (id, text, date)
                    """)
 except Exception as e:
     pass
@@ -24,7 +24,7 @@ def AddUser(id):
     sql = db.cursor()
     sql.execute(f""" SELECT id FROM users WHERE id = {id} """)
     if sql.fetchone() == None:
-        sql.execute("SELECT id FROM users")
+        # sql.execute("SELECT id FROM users")
         sql.execute(f"INSERT INTO users VALUES (?, ?, ?, ?)", (id, '', '', datetime.date.today()))
     db.commit()
 
@@ -77,6 +77,21 @@ def getAll():
     except Exception as e:
         print(e)
 
+def getText():
+    db = sqlite3.connect("users.db")
+    sql = db.cursor()
+    sql.execute("SELECT u.rowid, u.id, m.text FROM users u LEFT JOIN message m ON m.id = u.id")
+    texts = []
+    dbTexts = sql.fetchall()
+    for i, el in enumerate(dbTexts):
+        try:
+            if dbTexts[i][0] == dbTexts[i + 1][0]:
+                texts.append(dbTexts[i + 1])
+        except:
+            pass
+    print(texts)
+    return texts
+
 #message
 def AddMessage(id, text):
     db = sqlite3.connect("users.db")
@@ -85,9 +100,9 @@ def AddMessage(id, text):
         sql.execute(f"SELECT id FROM message WHERE id = '{id}' ")
         if sql.fetchone() is None:
             sql.execute("SELECT id FROM users")
-            sql.execute(f"INSERT INTO message VALUES (?, ?)", (id, text))
+            sql.execute(f"INSERT INTO message VALUES (?, ?, ?)", (id, text, datetime.date.today()))
 
     except:
         sql.execute("SELECT id FROM users")
-        sql.execute(f"INSERT INTO users VALUES (?, ?)", (id, text))
+        sql.execute(f"INSERT INTO users VALUES (?, ?, ?)", (id, text, datime.date.today()))
     db.commit()
