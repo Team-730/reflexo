@@ -14,4 +14,4 @@ def ready_msg(messages):
     return(sentiments)
 texts = db.getText()
 for el in texts:
-    ready_msg([el])
+    print(ready_msg([el]))
