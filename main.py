@@ -1,12 +1,10 @@
 import telebot
 import database as db
-
+import analyzer as ai
 
 bot = telebot.TeleBot('1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o')
+
 print(db.getText())
-print(db.getAll())
-
-
 @bot.message_handler(commands = ['start', 'help'])
 def start(message):
     bot.send_message(message.chat.id, f'Привет, {message.from_user.first_name}! Я бот созданый чтобы вы могли выразть ваши эмоции и поделиться своими проблемами или успехоми.')
