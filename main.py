@@ -1,12 +1,14 @@
 import telebot
-import database as db
-import analyzer as ai
+from database import DataBase as DB
+db = DB()
+
 
 bot = telebot.TeleBot('1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o')
 
-print(db.getText())
+
 @bot.message_handler(commands = ['start', 'help'])
 def start(message):
+    db = DB()
     bot.send_message(message.chat.id, f'Привет, {message.from_user.first_name}! Я бот созданый чтобы вы могли выразть ваши эмоции и поделиться своими проблемами или успехоми.')
     bot.send_message(message.chat.id, 'Напиши о том что ты чувствуешь, или чем бы ты хотел поделиться.')
     print(message.from_user.first_name)
@@ -14,7 +16,8 @@ def start(message):
 
 @bot.message_handler()
 def messages(message):
-    if message.chat.id == 1169621316 or message.chat.id == 935989323:
+    db = DB()
+    if message.chat.id == 1169621316:
         for users in db.getAll():
             user = str(users)
             id = user.replace('(', '')
