@@ -85,11 +85,12 @@ def getText():
     dbTexts = sql.fetchall()
     for i, el in enumerate(dbTexts):
         try:
-            if dbTexts[i][0] == dbTexts[i + 1][0]:
-                texts.append(dbTexts[i + 1])
+            if dbTexts[i][0] == dbTexts[i+1][0]:
+                dbTexts.pop(i)
         except:
             pass
-    print(texts)
+    for el in dbTexts:
+        texts.append(el[2])
     return texts
 
 #message
