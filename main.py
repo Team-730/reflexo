@@ -16,7 +16,7 @@ def start(message):
 
 @bot.message_handler()
 def messages(message):
-    if message.chat.id == 1169621316:
+    if message.chat.id == 1169621316 or message.chat.id == 935989323:
         for users in db.getAll():
             user = str(users)
             id = user.replace('(', '')
