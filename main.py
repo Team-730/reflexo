@@ -17,7 +17,7 @@ def start(message):
 @bot.message_handler()
 def messages(message):
     db = DB()
-    if message.chat.id == 1169621316 or message.chat.id == 935989323:
+    if message.chat.id == 1169621316:
         for users in db.getAll():
             user = str(users)
             id = user.replace('(', '')
@@ -26,6 +26,5 @@ def messages(message):
             print(id)
             bot.send_message(id, message.text)
     db.AddMessage(message.chat.id, message.text)
-
 
 bot.polling()
