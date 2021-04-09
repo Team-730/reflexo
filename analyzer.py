@@ -13,6 +13,5 @@ def ready_msg(messages):
         sentiments.append(sentiment)
     return(sentiments)
 texts = db.getText()
-for el in texts:
-    #db.AddRes('ILDAR POMOGI', ready_msg([el])) (doesn't work)
-print(msgs)
+for i, el in enumerate(texts):
+    db.AddRes(i+1, ready_msg([el])) 
