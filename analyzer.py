@@ -13,6 +13,5 @@ def ready_msg(messages):
         sentiments.append(sentiment)
     return(sentiments)
 texts = db.getText()
-print(db.getAll())
 for el in texts:
-    print(ready_msg([el]))
+    print(ready_msg([el]), '\n')
