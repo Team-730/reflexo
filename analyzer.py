@@ -14,7 +14,5 @@ def ready_msg(messages):
     return(sentiments)
 texts = db.getText()
 for el in texts:
-    msgs = [
-        ready_msg([el])
-    ]
+    #db.AddRes('ILDAR POMOGI', ready_msg([el])) (doesn't work)
 print(msgs)
