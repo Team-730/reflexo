@@ -15,3 +15,4 @@ def ready_msg(messages):
 texts = db.getText()
 for i, el in enumerate(texts):
     db.AddRes(i+1, ready_msg([el])) 
+    print(ready_msg([el]))

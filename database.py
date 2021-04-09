@@ -109,6 +109,8 @@ class DataBase:
             if self.sql.fetchone() is None:
                 self.sql.execute("SELECT res FROM matrix")
                 self.sql.execute(f"INSERT INTO matrix VALUES (?)", (res))
+            else:
+                self.sql.execute("UPDATE matrix SET res = '{res}' WHERE rowid = {num}")
 
         except:
             pass
