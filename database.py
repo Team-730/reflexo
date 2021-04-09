@@ -20,6 +20,13 @@ class DataBase:
         except Exception as e:
             pass
 
+        try:
+            self.sql.execute("""CREATE TABLE matrix
+                                  (res)
+                               """)
+        except Exception as e:
+            pass
+
 
     def AddUser(self, id):
         self.sql.execute(f""" SELECT id FROM users WHERE id = {id} """)
@@ -90,9 +97,19 @@ class DataBase:
             self.sql.execute(f"SELECT id FROM message WHERE id = '{id}' ")
             if self.sql.fetchone() is None:
                 self.sql.execute("SELECT id FROM users")
-                self.sql.execute(f"INSERT INTO message VALUES (?, ?, ?)", (id, text, datetime.date.today()))
+                self.sql.execute(f"INSERT INTO message VALUES (?, ?, ?, ?)", (id, '', text, datetime.date.today()))
 
         except:
-            self.sql.execute("SELECT id FROM users")
-            self.sql.execute(f"INSERT INTO users VALUES (?, ?, ?)", (id, text, datetime.date.today()))
+            pass
+        self.db.commit()
+
+    def AddRes(self, num, res):
+        try:
+            self.sql.execute(f"SELECT res FROM matrix WHERE rowid = {num} ")
+            if self.sql.fetchone() is None:
+                self.sql.execute("SELECT res FROM matrix")
+                self.sql.execute(f"INSERT INTO matrix VALUES (?)", (res))
+
+        except:
+            pass
         self.db.commit()
