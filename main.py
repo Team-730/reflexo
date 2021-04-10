@@ -2,7 +2,8 @@ import telebot
 from database import DataBase as DB
 
 
-bot = telebot.TeleBot('')
+bot = telebot.TeleBot('1779226494:AAGL57Uum34BXc_aROCwusZDb9Fvf4uDxZw')
+#'1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o'
 
 @bot.message_handler(commands=['start', 'help'])
 def start(message):
@@ -21,7 +22,7 @@ def messages(message):
     ans = db.getAns(message.chat.id)
     if ans == 1:
         bot.send_message(message.chat.id, 'Хорошо. Идем дальше.')
-        bot.send_message(message.chat.id, 'Как ты думаешь насколько ты полезен в комманде?')
+        bot.send_message(message.chat.id, 'Как ты думаешь насколько ты полезен в команде?')
     if ans == 2:
         bot.send_message(message.chat.id, 'Принято.')
         bot.send_message(message.chat.id, 'Доволен ли ты своей работой? Нравится ли тебе твоя роль?')
