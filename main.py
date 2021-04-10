@@ -2,8 +2,9 @@ import telebot
 from database import DataBase as DB
 
 
-bot = telebot.TeleBot('1779226494:AAGL57Uum34BXc_aROCwusZDb9Fvf4uDxZw')
-#'1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o'
+bot = telebot.TeleBot('1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o')
+#'1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o' - orlenokAI
+#'1779226494:AAGL57Uum34BXc_aROCwusZDb9Fvf4uDxZw' - reflexo-bot
 
 @bot.message_handler(commands=['start', 'help'])
 def start(message):
