@@ -8,14 +8,14 @@ class DataBase:
         self.sql = self.db.cursor()
         try:
             self.sql.execute("""CREATE TABLE users
-                                  (id, color, text, date)
+                                  (id, date)
                                """)
         except Exception as e:
             pass
 
         try:
             self.sql.execute("""CREATE TABLE message
-                                  (id, text, date)
+                                  (id, text, ans INT)
                                """)
         except Exception as e:
             pass
@@ -32,7 +32,7 @@ class DataBase:
         self.sql.execute(f""" SELECT id FROM users WHERE id = {id} """)
         if self.sql.fetchone() == None:
             # self.sql.execute("SELECT id FROM users")
-            self.sql.execute(f"INSERT INTO users VALUES (?, ?, ?, ?)", (id, '', '', datetime.date.today()))
+            self.sql.execute(f"INSERT INTO users VALUES (?, ?)", (id, datetime.date.today()))
         self.db.commit()
 
     def setData(self, id, date):
@@ -46,33 +46,46 @@ class DataBase:
             pass
         self.db.commit()
 
-    def setColor(self, id, color):
+    def setAns(self, id, ans):
         try:
-            self.sql.execute(f'SELECT id FROM users WHERE id = "{id}" ')
-            if self.sql.fetchone() is None:
-                pass
-            else:
-                self.sql.execute(f' UPDATE users SET color = "{color}" WHERE id = "{id}" ')
+            self.sql.execute(f'SELECT ans FROM message WHERE id = {id} ')
+            an = str(self.sql.fetchone())
+            an = an.replace('(', '')
+            an = an.replace(',', '')
+            an = an.replace(')', '')
+            a = int(an)
+            if ans == '+':
+                self.sql.execute(f' UPDATE message SET ans = {a + 1} WHERE id = {id} ')
+            if ans == '-':
+                self.sql.execute(f' UPDATE message SET ans = {a - 1} WHERE id = {id} ')
         except:
             pass
         self.db.commit()
 
-    def setText(self, id, text):
+    def getAns(self, id):
         try:
-            self.sql.execute(f'SELECT id FROM users WHERE id = "{id}" ')
-            if self.sql.fetchone() is None:
-                pass
-            else:
-                self.sql.execute(f' UPDATE users SET text = "{text}" WHERE id = "{id}" ')
+            self.sql.execute(f'SELECT ans FROM message WHERE id = {id} ')
+            an = an = str(self.sql.fetchone())
+            an = an.replace('(', '')
+            an = an.replace(',', '')
+            an = an.replace(')', '')
+            print(an)
+            return int(an)
         except Exception as e:
             print(e)
-        self.db.commit()
+
 
     def getAll(self):
         try:
             self.sql.execute(f'SELECT id FROM users')
             id = self.sql.fetchall()
-            return id
+            ids = []
+            for i in id:
+                d = i.replace('(', '')
+                d = i.replace(',', '')
+                d = i.replace(')', '')
+                ids.append(d)
+            return ids
         except Exception as e:
             print(e)
 
@@ -97,7 +110,7 @@ class DataBase:
             self.sql.execute(f"SELECT id FROM message WHERE id = '{id}' ")
             if self.sql.fetchone() is None:
                 self.sql.execute("SELECT id FROM users")
-                self.sql.execute(f"INSERT INTO message VALUES (?, ?, ?, ?)", (id, '', text, datetime.date.today()))
+                self.sql.execute(f"INSERT INTO message VALUES (?, ?, ?)", (id, text, 0))
 
         except:
             pass
@@ -109,9 +122,7 @@ class DataBase:
             if self.sql.fetchone() is None:
                 self.sql.execute("SELECT res FROM matrix")
                 self.sql.execute(f"INSERT INTO matrix VALUES (?)", (res))
-            else:
-                self.sql.execute("UPDATE matrix SET res = '{res}' WHERE rowid = {num}")
 
-        except Exception as e:
-            print(e)
+        except:
+            pass
         self.db.commit()
