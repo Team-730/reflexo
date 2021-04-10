@@ -8,7 +8,7 @@ class DataBase:
         self.sql = self.db.cursor()
         try:
             self.sql.execute("""CREATE TABLE users
-                                  (id, date)
+                                  (id, mark, date)
                                """)
         except Exception as e:
             pass
@@ -32,7 +32,7 @@ class DataBase:
         self.sql.execute(f""" SELECT id FROM users WHERE id = {id} """)
         if self.sql.fetchone() == None:
             # self.sql.execute("SELECT id FROM users")
-            self.sql.execute(f"INSERT INTO users VALUES (?, ?)", (id, datetime.date.today()))
+            self.sql.execute(f"INSERT INTO users VALUES (?, ?, ?)", (id, '0', datetime.date.today()))
         self.db.commit()
 
     def setData(self, id, date):
@@ -46,6 +46,17 @@ class DataBase:
             pass
         self.db.commit()
 
+    def setMark(self, id, mark):
+        try:
+            self.sql.execute(f'SELECT mark FROM users WHERE id = "{id}" ')
+            if self.sql.fetchone() is None:
+                pass
+            else:
+                self.sql.execute(f' UPDATE users SET mark = {mark} WHERE id = "{id}" ')
+        except:
+            pass
+        self.db.commit()
+
     def setAns(self, id, ans):
         try:
             self.sql.execute(f'SELECT ans FROM message WHERE id = {id} ')
@@ -54,10 +65,8 @@ class DataBase:
             an = an.replace(',', '')
             an = an.replace(')', '')
             a = int(an)
-            if ans == '+':
-                self.sql.execute(f' UPDATE message SET ans = {a + 1} WHERE id = {id} ')
-            if ans == '-':
-                self.sql.execute(f' UPDATE message SET ans = {a - 1} WHERE id = {id} ')
+            print(a)
+            self.sql.execute(f' UPDATE message SET ans = {ans} WHERE id = {id} ')
         except:
             pass
         self.db.commit()
@@ -110,7 +119,7 @@ class DataBase:
             self.sql.execute(f"SELECT id FROM message WHERE id = '{id}' ")
             if self.sql.fetchone() is None:
                 self.sql.execute("SELECT id FROM users")
-                self.sql.execute(f"INSERT INTO message VALUES (?, ?, ?)", (id, text, 0))
+                self.sql.execute(f"INSERT INTO message VALUES (?, ?, ?)", (id, text, -1))
 
         except:
             pass
