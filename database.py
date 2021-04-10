@@ -112,6 +112,6 @@ class DataBase:
             else:
                 self.sql.execute("UPDATE matrix SET res = '{res}' WHERE rowid = {num}")
 
-        except:
-            pass
+        except Exception as e:
+            print(e)
         self.db.commit()
