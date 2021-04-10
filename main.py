@@ -3,8 +3,8 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton, \
     InlineKeyboardMarkup, InlineKeyboardButton
 from database import DataBase as DB
 
-bot = telebot.TeleBot('1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o')
-# '1779226494:AAGL57Uum34BXc_aROCwusZDb9Fvf4uDxZw'
+bot = telebot.TeleBot(токен)
+
 
 
 mark = InlineKeyboardMarkup(row_width=3)
