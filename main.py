@@ -33,7 +33,7 @@ def start(message):
                      f'Привет, {message.from_user.first_name}! Я Рефлексор. Я могу отразить твое настроение. Для '
                      f'этого по возможности пиши мне о своем состоянии. Также в будущем ты сможешь увидеть настроение '
                      f'других, когда создатели сделают Калейдоскоп Душ. Хочешь узнать обо мне больше заходи на сайт: '
-                     f'http://reflectmood.tilda.ws/', reply_markup=begin)
+                     f'http://reflexo-ai.tilda.ws/page18650718.html', reply_markup=begin)
     db.setAns(message.chat.id, 0)
     print(message.from_user.first_name)
     db.AddUser(message.from_user.id)
@@ -65,53 +65,43 @@ def messages(message):
             "buttons": True,
             "wait_ans": True
         },
-        1: {
+        2: {
             "message": "Понял тебя. А как сильно ты сейчас нуждаешься в моральной поддержке? 1 - у меня всё хорошо, "
                        "5 - мне очень плохо и одиноко.",
             "buttons": True,
             "wait_ans": True
         },
-        2: {
+        3: {
             "message": "Хм, ясно. И последний вопрос. Можно ли сказать, что сегодня не твой день? 1 - нет, всё идёт "
                        "отлично, 5 - да, удача обошла меня стороной.",
             "buttons": True,
             "wait_ans": True
         },
-        3: {
+        4: {
             "message": "Чтобы я мог лучше понять твоё настроение, опиши своё состояние в нескольких словах",
             "buttons": False,
             "wait_ans": True
         },
-        4: {
+        5: {
             "message": "Спасибо за ответы). Пиши снова, когда захочешь. ",
             "buttons": False,
             "wait_ans": True
             },
-        5: {
+        6: {
             "message": "Рад, что ты написал. Я ждал тебя. ",
             "buttons": False,
             "wait_ans": True
             }
         }
     if mes[ans]["buttons"]:
-        if ans != 0:
-            an = ans - 1
-        else:
-            an = ans
-        bot.send_message(message.chat.id, mes[an]["message"], reply_markup=mark)
+        bot.send_message(message.chat.id, mes[ans]["message"], reply_markup=mark)
     else:
-        if ans != 0:
-            an = ans - 1
-        else:
-            an = ans
-        bot.send_message(message.chat.id, mes[an]["message"])
+        bot.send_message(message.chat.id, mes[ans]["message"])
         ans = db.getAns(message.chat.id)
         a = ans + 1
         db.setAns(message.chat.id, a)
     if message.text == 'Привет':
         bot.send_message(message.chat.id, 'Привет. Как дела?')
-    if ans == mes[max][0]:
-        db.setAns(message.chat.id, 0)
     if message.text != 'Начать':
         db.AddMessage(message.chat.id, message.text)
 
