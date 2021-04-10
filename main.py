@@ -3,7 +3,7 @@ from database import DataBase as DB
 db = DB()
 
 
-bot = telebot.TeleBot('1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o')
+bot = telebot.TeleBot('1727515629:AAHc2_h5XxrvRM6QFhdGEVdLtWABn97ZWQ0')
 
 
 @bot.message_handler(commands = ['start', 'help'])
