@@ -3,8 +3,8 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton, \
     InlineKeyboardMarkup, InlineKeyboardButton
 from database import DataBase as DB
 
-bot = telebot.TeleBot(токен)
-
+bot = telebot.TeleBot('1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o')
+# '1779226494:AAGL57Uum34BXc_aROCwusZDb9Fvf4uDxZw'
 
 
 mark = InlineKeyboardMarkup(row_width=3)
@@ -44,7 +44,7 @@ def keyboard(c):
     db = DB()
     if c.data == '1' or c.data == '2' or c.data == '3' or c.data == '4' or c.data == '5':
         ans = db.getAns(c.message.chat.id)
-        a = ans + 1
+        a = ans
         bot.edit_message_text(chat_id=c.message.chat.id, message_id=c.message.message_id, text='Хорошо. Идем дальше.')
         db.setAns(c.message.chat.id, a)
         db.setMark(c.message.chat.id, c.data)
@@ -65,29 +65,29 @@ def messages(message):
             "buttons": True,
             "wait_ans": True
         },
-        2: {
+        1: {
             "message": "Понял тебя. А как сильно ты сейчас нуждаешься в моральной поддержке? 1 - у меня всё хорошо, "
                        "5 - мне очень плохо и одиноко.",
             "buttons": True,
             "wait_ans": True
         },
-        3: {
+        2: {
             "message": "Хм, ясно. И последний вопрос. Можно ли сказать, что сегодня не твой день? 1 - нет, всё идёт "
                        "отлично, 5 - да, удача обошла меня стороной.",
             "buttons": True,
             "wait_ans": True
         },
-        4: {
+        3: {
             "message": "Чтобы я мог лучше понять твоё настроение, опиши своё состояние в нескольких словах",
             "buttons": False,
             "wait_ans": True
         },
-        5: {
+        4: {
             "message": "Спасибо за ответы). Пиши снова, когда захочешь. ",
             "buttons": False,
             "wait_ans": True
             },
-        6: {
+        5: {
             "message": "Рад, что ты написал. Я ждал тебя. ",
             "buttons": False,
             "wait_ans": True
