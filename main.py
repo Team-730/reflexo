@@ -93,10 +93,10 @@ def messages(message):
             "wait_ans": True
             }
         }
-    if mes[ans]["buttons"]:
-        bot.send_message(message.chat.id, mes[ans]["message"], reply_markup=mark)
+    if mes[a]["buttons"]:
+        bot.send_message(message.chat.id, mes[a]["message"], reply_markup=mark)
     else:
-        bot.send_message(message.chat.id, mes[ans]["message"])
+        bot.send_message(message.chat.id, mes[a]["message"])
         ans = db.getAns(message.chat.id)
         a = ans + 1
         db.setAns(message.chat.id, a)
