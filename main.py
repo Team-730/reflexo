@@ -3,8 +3,8 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton, \
     InlineKeyboardMarkup, InlineKeyboardButton
 from database import DataBase as DB
 
-bot = telebot.TeleBot('токен')
-
+bot = telebot.TeleBot('1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o')
+# '1779226494:AAGL57Uum34BXc_aROCwusZDb9Fvf4uDxZw'
 
 
 mark = InlineKeyboardMarkup(row_width=3)
@@ -62,7 +62,7 @@ def messages(message):
     b = ans + 1
     db.setAns(message.chat.id, b)
     if message.text == 'Привет':
-        bot.send_message(message.chat.id, 'Рад, что ты написал. Я ждал тебя.')
+        bot.send_message(message.chat.id, 'Привет. Как дела?')
     mes = {
         0: {
             "message": "Давай начнём. Расскажи немного о своём состоянии. Насколько ты устал? 1 - бодр и полон сил, "
@@ -88,38 +88,33 @@ def messages(message):
             "wait_ans": True
         },
         4: {
-            "message": "Спасибо за ответы). Пиши снова, когда захочешь. ",
-            "buttons": False,
-            "wait_ans": True
-        },
-        5: {
-            "message": "Рад, что ты написал. Я ждал тебя. ",
+            "message": "Спасибо за ответы). Пиши снова, когда захочешь.",
             "buttons": False,
             "wait_ans": False
         },
-        6: {
+        5: {
             "message": "Как прошло твоё время? Ты доволен собой? 1 - Я доволен собой, 5 - Недовольнее некуда.",
             "buttons": True,
             "wait_ans": True
         },
-        7: {
+        6: {
             "message": "Хорошо, следующий вопрос. На сколько ты бодр? 1 - Готов бегать всю ночь, 5 - Коала бодрее.",
             "buttons": True,
             "wait_ans": True
         },
-        8: {
+        7: {
             "message": "Окей, подходим к концу. Готов ли ты сейчас поболтать с кем-нибудь. 1 - оставьте меня в покое, "
                        "5 - да, жажду общения.",
             "buttons": True,
             "wait_ans": True
         },
-        9: {
+        8: {
             "message": "Опиши пожалуйста своё состояние несколькими словами, это поможет мне точнее определить твоё "
                        "настроение.",
             "buttons": False,
             "wait_ans": True
         },
-        10: {
+        9: {
             "message": "Спасибо что написал). Буду ждать следующего диалога с тобой.",
             "buttons": False,
             "wait_ans": True
@@ -132,11 +127,6 @@ def messages(message):
             else:
                 bot.send_message(message.chat.id, mes[a]["message"])
                 ans = db.getAns(message.chat.id)
-                a = ans + 1
-                db.setAns(message.chat.id, a)
-            if message.text == 'Привет':
-                bot.send_message(message.chat.id, 'Привет. Как дела?')
-
             f = 0
             for el in mes:
                 print(el)
