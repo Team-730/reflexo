@@ -65,7 +65,6 @@ class DataBase:
             an = an.replace(',', '')
             an = an.replace(')', '')
             a = int(an)
-            print(a)
             self.sql.execute(f' UPDATE message SET ans = {ans} WHERE id = {id} ')
         except:
             pass
