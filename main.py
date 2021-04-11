@@ -15,7 +15,7 @@ cheture = InlineKeyboardButton('4', callback_data=4)
 five = InlineKeyboardButton('5', callback_data=5)
 mark.add(one, two, tri, cheture, five)
 
-begin = ReplyKeyboardMarkup(resize_keyboard = True)
+begin = ReplyKeyboardMarkup(resize_keyboard=True)
 info = KeyboardButton("Начать")
 begin.add(info)
 
@@ -25,17 +25,19 @@ def start(message):
     db = DB()
     try:
         ans = db.getAns(message.chat.id)
-        if ans != 1:
-            db.setAns(message.chat.id, 1)
-    except Exception as e:
+        if ans != 0:
+            db.setAns(message.chat.id, 0)
+    except:
         pass
     bot.send_message(message.chat.id, f'Привет, {message.from_user.first_name}! Я Рефлексо. Я могу отразить твое '
                                       f'настроение. Для '
-                     f'этого по возможности пиши мне о своем состоянии. Также в будущем ты сможешь увидеть настроение '
-                     f'других, когда создатели сделают Калейдоскоп Душ. Хочешь узнать обо мне больше заходи на сайт: '
-                     f'http://reflexo-ai.tilda.ws/page18650718.html', reply_markup=begin)
-    db.setAns(message.chat.id, 1)
-    #(message.from_user.first_name)
+                                      f'этого по возможности пиши мне о своем состоянии. Также в будущем ты сможешь '
+                                      f'увидеть настроение '
+                                      f'других, когда создатели сделают Калейдоскоп Душ. Хочешь узнать обо мне больше '
+                                      f'заходи на сайт: '
+                                      f'http://reflexo-ai.tilda.ws/page18650718.html', reply_markup=begin)
+    db.setAns(message.chat.id, 0)
+    # (message.from_user.first_name)
     db.AddUser(message.from_user.id)
 
 
@@ -56,7 +58,7 @@ def messages(message):
     db = DB()
     db.AddMessage(message.chat.id, message.text)
     ans = db.getAns(message.chat.id)
-    a = ans - 1
+    a = ans
     b = ans + 1
     db.setAns(message.chat.id, b)
     mes = {
@@ -87,29 +89,40 @@ def messages(message):
             "message": "Спасибо за ответы). Пиши снова, когда захочешь. ",
             "buttons": False,
             "wait_ans": True
-            },
+        },
         5: {
             "message": "Спасибо за ответы). Пиши снова, когда захочешь. ",
             "buttons": False,
             "wait_ans": True
-            },
+        },
         6: {
             "message": "Рад, что ты написал. Я ждал тебя",
             "buttons": False,
             "wait_ans": True
         }
-        }
-    if mes[a]["buttons"]:
-        bot.send_message(message.chat.id, mes[a]["message"], reply_markup=mark)
-    else:
-        bot.send_message(message.chat.id, mes[a]["message"])
-        ans = db.getAns(message.chat.id)
-        a = ans + 1
-        db.setAns(message.chat.id, a)
-    if message.text == 'Привет':
-        bot.send_message(message.chat.id, 'Привет. Как дела?')
-    if message.text != 'Начать':
-        db.AddMessage(message.chat.id, message.text)
+    }
+    try:
+        if message.text != 'Пока':
+            if mes[a]["buttons"]:
+                bot.send_message(message.chat.id, mes[a]["message"], reply_markup=mark)
+            else:
+                bot.send_message(message.chat.id, mes[a]["message"])
+                ans = db.getAns(message.chat.id)
+                a = ans + 1
+                db.setAns(message.chat.id, a)
+            if message.text == 'Привет':
+                bot.send_message(message.chat.id, 'Привет. Как дела?')
+
+            f = 0
+            for el in mes:
+                print(el)
+                if message.text != 'Начать' and message.text != el and f == 0:
+                    db.AddMessage(message.chat.id, message.text)
+                    f = 1
+        else:
+            bot.send_message(message.chat.id, 'До новых встреч.')
+    except:
+        db.setAns(message.chat.id, 0)
 
 
 bot.polling()
