@@ -136,7 +136,7 @@ class DataBase:
 
     def setParam3(self, id, param3):
         try:
-            self.sql.execute(f"UPDATE matrix SET param3 = '{param3}' WHERE id = {id}")
+            self.sql.execute(f"UPDATE matrix SET param3 = {param3} WHERE id = {id}")
         except Exception as e:
             print(e)
         self.db.commit()
@@ -161,6 +161,19 @@ class DataBase:
         except Exception as e:
             print(e)
         self.db.commit()
+
+    def getMatrix(self, id):
+        self.sql.execute(f" SELECT param1, param2, param3, positive, negative, neutral FROM matrix WHERE id = {id} ")
+        mar = self.sql.fetchone()
+        matrix = {
+            'param1': mar[0],
+            'param2': mar[1],
+            'param3': mar[2],
+            'positive': mar[3],
+            'negative': mar[4],
+            'neutral': mar[5],
+        }
+        return matrix
 
     def AddID(self, id):
         try:

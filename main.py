@@ -141,6 +141,7 @@ def messages(message):
                 nn.ready_msg([message.text], message.chat.id)
         else:
             bot.send_message(message.chat.id, 'До новых встреч.')
+
     except Exception as e:
         print(e)
         db.setAns(message.chat.id, 0)
