@@ -78,10 +78,11 @@ class DataBase:
             id = self.sql.fetchall()
             ids = []
             for i in id:
-                i.replace('(', '')
-                i.replace(',', '')
-                i.replace(')', '')
-                ids.append(i)
+                idd = str(i)
+                a = idd.replace('(', '')
+                b = a.replace(',', '')
+                c = b.replace(')', '')
+                ids.append(c)
             return ids
         except Exception as e:
             print(e)
@@ -163,9 +164,10 @@ class DataBase:
         self.db.commit()
 
     def getMatrix(self, num):
-        self.sql.execute(f" SELECT param1, param2, param3, positive, negative, neutral FROM matrix WHERE rowid = {num} ")
+        self.sql.execute(f" SELECT param1, param2, param3, positive, negative, neutral, id FROM matrix WHERE rowid = {num} ")
         mar = self.sql.fetchone()
         matrix = {
+            'id': mar[6],
             'param1': mar[0],
             'param2': mar[1],
             'param3': mar[2],
