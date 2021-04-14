@@ -11,51 +11,45 @@ class DataBase:
                                   (id, mark, date)
                                """)
         except Exception as e:
-            pass
+            print(e, 14)
 
         try:
             self.sql.execute("""CREATE TABLE message
                                   (id, text, ans INT)
                                """)
         except Exception as e:
-            pass
-
+            print(e, 21)
         try:
             self.sql.execute("""CREATE TABLE matrix
                                   (id, param1, param2, param3, positive, negative, neutral)
                                """)
-        except:
-            pass
+        except Exception as e:
+            print(e, 27)
 
-    def AddUser(self, id):
-        self.sql.execute(f""" SELECT id FROM users WHERE id = {id} """)
+    def AddUser(self, userID):
+        self.sql.execute(f""" SELECT id FROM users WHERE id = {userID} """)
         if self.sql.fetchone() is None:
             # self.sql.execute("SELECT id FROM users")
-            self.sql.execute(f"INSERT INTO users VALUES (?, ?, ?)", (id, '0', datetime.date.today()))
+            self.sql.execute(f"INSERT INTO users VALUES (?, ?, ?)", (userID, '0', datetime.date.today()))
         self.db.commit()
 
-    def setData(self, id, date):
+    def setData(self, DateID, date):
         try:
-            self.sql.execute(f'SELECT id FROM users WHERE id = "{id}" ')
+            self.sql.execute(f'SELECT id FROM users WHERE id = "{DateID}" ')
             if self.sql.fetchone() is None:
                 pass
             else:
-                self.sql.execute(f' UPDATE users SET date = "{date}" WHERE id = "{id}" ')
-        except:
-            pass
+                self.sql.execute(f' UPDATE users SET date = "{date}" WHERE id = "{DateID}" ')
+        except Exception as e:
+            print(e, 44)
         self.db.commit()
 
     def setAns(self, idAns, ans):
         try:
             self.sql.execute(f'SELECT ans FROM message WHERE id = {idAns} ')
-            an = str(self.sql.fetchone())
-            an = an.replace('(', '')
-            an = an.replace(',', '')
-            an = an.replace(')', '')
-            a = int(an)
             self.sql.execute(f' UPDATE message SET ans = {ans} WHERE id = {idAns} ')
-        except:
-            pass
+        except Exception as e:
+            print(e, 57)
         self.db.commit()
 
     def getAns(self, idA):
@@ -67,17 +61,18 @@ class DataBase:
             an = an.replace(')', '')
             try:
                 return int(an)
-            except:
+            except Exception as e:
+                print(e, 70)
                 return 0
         except Exception as e:
-            print(e)
+            print(e, 73)
 
     def getAll(self):
         try:
             self.sql.execute(f'SELECT id FROM users')
-            id = self.sql.fetchall()
+            AllID = self.sql.fetchall()
             ids = []
-            for i in id:
+            for i in AllID:
                 idd = str(i)
                 a = idd.replace('(', '')
                 b = a.replace(',', '')
@@ -85,7 +80,7 @@ class DataBase:
                 ids.append(c)
             return ids
         except Exception as e:
-            print(e)
+            print(e, 88)
 
     def getText(self):
         self.sql.execute("SELECT u.rowid, u.id, m.text FROM users u LEFT JOIN message m ON m.id = u.id")
@@ -95,8 +90,8 @@ class DataBase:
             try:
                 if dbTexts[i][0] == dbTexts[i + 1][0]:
                     dbTexts.pop(i)
-            except:
-                pass
+            except Exception as e:
+                print(e, 99)
         for el in dbTexts:
             texts.append(str(el[2]))
         return texts
@@ -108,63 +103,65 @@ class DataBase:
             if self.sql.fetchone() is None:
                 self.sql.execute("SELECT id FROM users")
                 self.sql.execute(f"INSERT INTO message VALUES (?, ?, ?)", (idMes, text, -1))
-        except:
-            pass
+        except Exception as e:
+            print(e, 112)
         self.db.commit()
 
-    def AddRes(self, id, param1, param2, param3, positive, negative, neutral):
+    def AddRes(self, ResID, param1, param2, param3, positive, negative, neutral):
         # self.sql.execute("SELECT rowid, param1, param2, param3 FROM matrix")
         try:
             self.sql.execute(
-                f"UPDATE matrix SET param1 = {param1}, param2 = {param2}, param3 = {param3}, positive = {positive}, negative = {negative}, neutral = {neutral} WHERE id = {id}")
+                f"UPDATE matrix SET param1 = {param1}, param2 = {param2}, param3 = {param3}, positive = {positive}, "
+                f"negative = {negative}, neutral = {neutral} WHERE id = {ResID}")
         except Exception as e:
-            print(e)
+            print(e, 121)
         self.db.commit()
 
-    def setParam1(self, id, param1):
+    def setParam1(self, P1ID, param1):
         try:
-            self.sql.execute(f"UPDATE matrix SET param1 = {param1} WHERE id = {id}")
+            self.sql.execute(f"UPDATE matrix SET param1 = {param1} WHERE id = {P1ID}")
         except Exception as e:
-            print(e)
+            print(e, 128)
         self.db.commit()
 
-    def setParam2(self, id, param2):
+    def setParam2(self, P2ID, param2):
         try:
-            self.sql.execute(f"UPDATE matrix SET param2 = {param2} WHERE id = {id}")
+            self.sql.execute(f"UPDATE matrix SET param2 = {param2} WHERE id = {P2ID}")
         except Exception as e:
-            print(e)
+            print(e, 135)
         self.db.commit()
 
-    def setParam3(self, id, param3):
+    def setParam3(self, P3ID, param3):
         try:
-            self.sql.execute(f"UPDATE matrix SET param3 = {param3} WHERE id = {id}")
+            self.sql.execute(f"UPDATE matrix SET param3 = {param3} WHERE id = {P3ID}")
         except Exception as e:
-            print(e)
+            print(e, 142)
         self.db.commit()
 
-    def setPos(self, id, positive):
+    def setPos(self, PID, positive):
         try:
-            self.sql.execute(f"UPDATE matrix SET positive = {positive} WHERE id = {id}")
+            self.sql.execute(f"UPDATE matrix SET positive = {positive} WHERE id = {PID}")
         except Exception as e:
-            print(e)
+            print(e, 149)
         self.db.commit()
 
-    def setNegativ(self, id, negative):
+    def setNegative(self, NegID, negative):
         try:
-            self.sql.execute(f"UPDATE matrix SET negative = {negative} WHERE id = {id}")
+            self.sql.execute(f"UPDATE matrix SET negative = {negative} WHERE id = {NegID}")
         except Exception as e:
-            print(e)
+            print(e, 156)
         self.db.commit()
 
-    def setNeutral(self, id, neutral):
+    def setNeutral(self, NID, neutral):
         try:
-            self.sql.execute(f"UPDATE matrix SET neutral = {neutral} WHERE id = {id}")
+            self.sql.execute(f"UPDATE matrix SET neutral = {neutral} WHERE id = {NID}")
         except Exception as e:
-            print(e)
+            print(e, 163)
         self.db.commit()
 
     def getMatrix(self, num):
-        self.sql.execute(f" SELECT param1, param2, param3, positive, negative, neutral, id FROM matrix WHERE rowid = {num} ")
+        self.sql.execute(f" SELECT param1, param2, param3, positive, negative, neutral, ",
+                         f"id FROM matrix WHERE rowid = {num} ")
         mar = self.sql.fetchone()
         matrix = {
             'id': mar[6],
@@ -177,11 +174,11 @@ class DataBase:
         }
         return matrix
 
-    def AddID(self, id):
+    def AddID(self, MID):
         try:
-            self.sql.execute(f"SELECT id FROM matrix WHERE id = {id}")
+            self.sql.execute(f"SELECT id FROM matrix WHERE id = {MID}")
             if self.sql.fetchone() is None:
-                self.sql.execute(f"INSERT INTO matrix VALUES (?, ?, ?, ?, ?, ?, ?)", (id, 0, 0, 0, 0, 0, 0))
+                self.sql.execute(f"INSERT INTO matrix VALUES (?, ?, ?, ?, ?, ?, ?)", (MID, 0, 0, 0, 0, 0, 0))
         except Exception as e:
-            print(e)
+            print(e, 186)
         self.db.commit()

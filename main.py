@@ -4,9 +4,7 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton, \
 from database import DataBase as DB
 from analyzer import DostN as NN
 
-
 bot = telebot.TeleBot('1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o')
-
 
 mark = InlineKeyboardMarkup(row_width=3)
 one = InlineKeyboardButton('1', callback_data=1)
@@ -26,8 +24,8 @@ def start(message):
         ans = db.getAns(message.chat.id)
         if ans != 0:
             db.setAns(message.chat.id, 0)
-    except:
-        pass
+    except Exception as e:
+        print(e, 28)
     bot.send_message(message.chat.id, f'Привет, {message.from_user.first_name}! Я Рефлексо. Я могу отразить твое '
                                       f'настроение. Для '
                                       f'этого по возможности пиши мне о своем состоянии. Также в будущем ты сможешь '
@@ -44,7 +42,6 @@ def start(message):
 @bot.callback_query_handler(func=lambda c: True)
 def keyboard(c):
     db = DB()
-    nn = NN()
     if c.data == '1' or c.data == '2' or c.data == '3':
         ans = db.getAns(c.message.chat.id)
         bot.edit_message_text(chat_id=c.message.chat.id, message_id=c.message.message_id, text='Хорошо. Идем дальше.')
@@ -57,11 +54,11 @@ def keyboard(c):
         elif ans == 3 or ans == 7:
             db.setParam3(c.message.chat.id, c.data)
 
+
 @bot.message_handler()
 def messages(message):
     db = DB()
     nn = NN()
-    print(message.chat.id, message.from_user.id, message.id)
     db.AddMessage(message.chat.id, message.text)
     ans = db.getAns(message.chat.id)
     a = ans
@@ -135,7 +132,6 @@ def messages(message):
                 bot.send_message(message.chat.id, mes[a]["message"], reply_markup=mark)
             else:
                 bot.send_message(message.chat.id, mes[a]["message"])
-                ans = db.getAns(message.chat.id)
             if message.text != 'Начать' and message.chat.id == message.from_user.id:
                 db.AddMessage(message.chat.id, message.text)
                 nn.ready_msg([message.text], message.chat.id)
@@ -143,7 +139,7 @@ def messages(message):
             bot.send_message(message.chat.id, 'До новых встреч.')
 
     except Exception as e:
-        print(e)
+        print(e, 145)
         db.setAns(message.chat.id, 0)
 
 
