@@ -2,6 +2,8 @@ import telebot
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton, \
     InlineKeyboardMarkup, InlineKeyboardButton
 from database import DataBase as DB
+import sort
+import ai
 
 bot = telebot.TeleBot('1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o')
 
