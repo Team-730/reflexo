@@ -162,8 +162,8 @@ class DataBase:
             print(e)
         self.db.commit()
 
-    def getMatrix(self, id):
-        self.sql.execute(f" SELECT param1, param2, param3, positive, negative, neutral FROM matrix WHERE id = {id} ")
+    def getMatrix(self, num):
+        self.sql.execute(f" SELECT param1, param2, param3, positive, negative, neutral FROM matrix WHERE rowid = {num} ")
         mar = self.sql.fetchone()
         matrix = {
             'param1': mar[0],
