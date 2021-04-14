@@ -2,20 +2,17 @@ import telebot
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton, \
     InlineKeyboardMarkup, InlineKeyboardButton
 from database import DataBase as DB
-import sort
-import ai
+from analyzer import DostN as NN
+
 
 bot = telebot.TeleBot('1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o')
-
 
 
 mark = InlineKeyboardMarkup(row_width=3)
 one = InlineKeyboardButton('1', callback_data=1)
 two = InlineKeyboardButton('2', callback_data=2)
 tri = InlineKeyboardButton('3', callback_data=3)
-cheture = InlineKeyboardButton('4', callback_data=4)
-five = InlineKeyboardButton('5', callback_data=5)
-mark.add(one, two, tri, cheture, five)
+mark.add(one, two, tri)
 
 begin = ReplyKeyboardMarkup(resize_keyboard=True)
 info = KeyboardButton("Начать")
@@ -41,23 +38,30 @@ def start(message):
     db.setAns(message.chat.id, 0)
     # (message.from_user.first_name)
     db.AddUser(message.from_user.id)
+    db.AddID(message.chat.id)
 
 
 @bot.callback_query_handler(func=lambda c: True)
 def keyboard(c):
     db = DB()
-    if c.data == '1' or c.data == '2' or c.data == '3' or c.data == '4' or c.data == '5':
+    nn = NN()
+    if c.data == '1' or c.data == '2' or c.data == '3':
         ans = db.getAns(c.message.chat.id)
-        a = ans
         bot.edit_message_text(chat_id=c.message.chat.id, message_id=c.message.message_id, text='Хорошо. Идем дальше.')
-        db.setAns(c.message.chat.id, a)
-        db.setMark(c.message.chat.id, c.data)
+        db.setAns(c.message.chat.id, ans)
         messages(c.message)
-
+        if ans == 1 or ans == 5:
+            db.setParam1(c.message.chat.id, c.data)
+        elif ans == 2 or ans == 6:
+            db.setParam2(c.message.chat.id, c.data)
+        elif ans == 3 or ans == 7:
+            db.setParam3(c.message.chat.id, c.data)
 
 @bot.message_handler()
 def messages(message):
     db = DB()
+    nn = NN()
+    print(message.chat.id, message.from_user.id, message.id)
     db.AddMessage(message.chat.id, message.text)
     ans = db.getAns(message.chat.id)
     a = ans
@@ -68,19 +72,19 @@ def messages(message):
     mes = {
         0: {
             "message": "Давай начнём. Расскажи немного о своём состоянии. Насколько ты устал? 1 - бодр и полон сил, "
-                       "5 - готов упасть и лежать.",
+                       "3 - готов упасть и лежать.",
             "buttons": True,
             "wait_ans": True
         },
         1: {
             "message": "Понял тебя. А как сильно ты сейчас нуждаешься в моральной поддержке? 1 - у меня всё хорошо, "
-                       "5 - мне очень плохо и одиноко.",
+                       "3 - мне очень плохо и одиноко.",
             "buttons": True,
             "wait_ans": True
         },
         2: {
             "message": "Хм, ясно. И последний вопрос. Можно ли сказать, что сегодня не твой день? 1 - нет, всё идёт "
-                       "отлично, 5 - да, удача обошла меня стороной.",
+                       "отлично, 3 - да, удача обошла меня стороной.",
             "buttons": True,
             "wait_ans": True
         },
@@ -95,18 +99,18 @@ def messages(message):
             "wait_ans": False
         },
         5: {
-            "message": "Как прошло твоё время? Ты доволен собой? 1 - Я доволен собой, 5 - Недовольнее некуда.",
+            "message": "Как прошло твоё время? Ты доволен собой? 1 - Я доволен собой, 3 - Недовольнее некуда.",
             "buttons": True,
             "wait_ans": True
         },
         6: {
-            "message": "Хорошо, следующий вопрос. На сколько ты бодр? 1 - Готов бегать всю ночь, 5 - Коала бодрее.",
+            "message": "Хорошо, следующий вопрос. На сколько ты бодр? 1 - Готов бегать всю ночь, 3 - Коала бодрее.",
             "buttons": True,
             "wait_ans": True
         },
         7: {
             "message": "Окей, подходим к концу. Готов ли ты сейчас поболтать с кем-нибудь. 1 - оставьте меня в покое, "
-                       "5 - да, жажду общения.",
+                       "3 - да, жажду общения.",
             "buttons": True,
             "wait_ans": True
         },
@@ -122,6 +126,9 @@ def messages(message):
             "wait_ans": True
         }
     }
+    bot_mes = []
+    for merely in mes:
+        bot_mes.append(mes[merely]['message'])
     try:
         if message.text != 'Пока':
             if mes[a]["buttons"]:
@@ -129,15 +136,13 @@ def messages(message):
             else:
                 bot.send_message(message.chat.id, mes[a]["message"])
                 ans = db.getAns(message.chat.id)
-            f = 0
-            for el in mes:
-                print(el)
-                if message.text != 'Начать' and message.text != el and f == 0:
-                    db.AddMessage(message.chat.id, message.text)
-                    f = 1
+            if message.text != 'Начать' and message.chat.id == message.from_user.id:
+                db.AddMessage(message.chat.id, message.text)
+                nn.ready_msg([message.text], message.chat.id)
         else:
             bot.send_message(message.chat.id, 'До новых встреч.')
-    except:
+    except Exception as e:
+        print(e)
         db.setAns(message.chat.id, 0)
 
 
