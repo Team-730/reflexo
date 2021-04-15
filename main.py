@@ -7,7 +7,6 @@ import puzzle_generator as pg
 
 bot = telebot.TeleBot('1727515629:AAHc2_h5XxrvRM6QFhdGEVdLtWABn97ZWQ0')
 db = DB()
-print(db.getMatrix(0))
 
 mark = InlineKeyboardMarkup(row_width=3)
 one = InlineKeyboardButton('1', callback_data=1)
