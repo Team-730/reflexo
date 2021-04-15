@@ -3,8 +3,11 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton, \
     InlineKeyboardMarkup, InlineKeyboardButton
 from database import DataBase as DB
 from analyzer import DostN as NN
+import puzzle_generator as pg
 
 bot = telebot.TeleBot('1727515629:AAHc2_h5XxrvRM6QFhdGEVdLtWABn97ZWQ0')
+db = DB()
+print(db.getMatrix(0))
 
 mark = InlineKeyboardMarkup(row_width=3)
 one = InlineKeyboardButton('1', callback_data=1)
@@ -137,7 +140,8 @@ def messages(message):
                 nn.ready_msg([message.text], message.chat.id)
         else:
             bot.send_message(message.chat.id, 'До новых встреч.')
-
+        if ans == 4 or ans == 9:
+            pg()
     except Exception as e:
         print(e, 145)
         db.setAns(message.chat.id, 0)
