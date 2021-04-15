@@ -5,9 +5,13 @@ from database import DataBase as DB
 from analyzer import DostN as NN
 import puzzle_generator as pg
 
+<<<<<<< HEAD
 bot = telebot.TeleBot('1727515629:AAHc2_h5XxrvRM6QFhdGEVdLtWABn97ZWQ0')
 db = DB()
 print(db.getMatrix(0))
+=======
+bot = telebot.TeleBot('1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o')
+>>>>>>> 74f16b784dbacde49e37146cd8f9b2a30418e408
 
 mark = InlineKeyboardMarkup(row_width=3)
 one = InlineKeyboardButton('1', callback_data=1)
@@ -36,7 +40,7 @@ def start(message):
                                       f'других, когда создатели сделают Калейдоскоп Душ. Хочешь узнать обо мне больше '
                                       f'заходи на сайт: '
                                       f'http://reflexo-ai.tilda.ws/page18650718.html', reply_markup=begin)
-    db.setAns(message.chat.id, 0)
+    db.setAns(message.chat.id, 1)
     # (message.from_user.first_name)
     db.AddUser(message.from_user.id)
     db.AddID(message.chat.id)
@@ -94,7 +98,8 @@ def messages(message):
             "wait_ans": True
         },
         4: {
-            "message": "Спасибо за ответы). Пиши снова, когда захочешь.",
+            "message": "Спасибо за ответы). Скоро в 4 холе появится Калейдоскоп душ, где ты сможешь увидеть "
+                       "визуализацию настроений всех учасников смены. Пиши снова, когда захочешь.",
             "buttons": False,
             "wait_ans": False
         },
@@ -121,7 +126,8 @@ def messages(message):
             "wait_ans": True
         },
         9: {
-            "message": "Спасибо что написал). Буду ждать следующего диалога с тобой.",
+            "message": "Спасибо что написал). Буду ждать следующего диалога с тобой. Скоро в 4 холе появится "
+                       "Калейдоскоп душ, где ты сможешь посмотреть визуализацию настроений всех учасников смены.",
             "buttons": False,
             "wait_ans": True
         }
