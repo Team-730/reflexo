@@ -30,7 +30,7 @@ class DataBase:
         self.sql.execute(f""" SELECT id FROM users WHERE id = {userID} """)
         if self.sql.fetchone() is None:
             # self.sql.execute("SELECT id FROM users")
-            self.sql.execute(f"INSERT INTO users VALUES (?, ?, ?)", (userID, '0', datetime.date.today()))
+            self.sql.execute(f"INSERT INTO users VALUES (?, ?, ?)", (userID, 0, datetime.date.today()))
         self.db.commit()
 
     def setData(self, DateID, date):
