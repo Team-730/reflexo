@@ -4,7 +4,7 @@ import datetime
 
 class DataBase:
     def __init__(self):
-        self.db = sqlite3.connect("users.db")
+        self.db = sqlite3.connect("../db/users.db")
         self.sql = self.db.cursor()
         try:
             self.sql.execute("""CREATE TABLE users
