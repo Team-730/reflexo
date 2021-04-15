@@ -41,6 +41,12 @@ def start(message):
     db.AddID(message.chat.id)
 
 
+@bot.message_handler(commands=['user'])
+def user(message):
+    db = DB()
+    bot.send_message(message.chat.id, db.countUsers())
+
+
 @bot.callback_query_handler(func=lambda c: True)
 def keyboard(c):
     db = DB()
@@ -146,7 +152,5 @@ def messages(message):
     except Exception as e:
         print(e, 145)
         db.setAns(message.chat.id, 0)
-    if message.text == 'Голубой питон':
-        bot.send_message(message.chat.id, db.countUsers())
 
 bot.polling()
