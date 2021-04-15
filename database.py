@@ -182,3 +182,8 @@ class DataBase:
         except Exception as e:
             print(e, 186)
         self.db.commit()
+    def countUsers():
+        try:
+            self.sql.execute(f"SELECT count(*) from users")
+        except Exception as e:
+            print(e, 189)

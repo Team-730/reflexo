@@ -5,13 +5,9 @@ from database import DataBase as DB
 from analyzer import DostN as NN
 import puzzle_generator as pg
 
-<<<<<<< HEAD
 bot = telebot.TeleBot('1727515629:AAHc2_h5XxrvRM6QFhdGEVdLtWABn97ZWQ0')
 db = DB()
 print(db.getMatrix(0))
-=======
-bot = telebot.TeleBot('1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o')
->>>>>>> 74f16b784dbacde49e37146cd8f9b2a30418e408
 
 mark = InlineKeyboardMarkup(row_width=3)
 one = InlineKeyboardButton('1', callback_data=1)
@@ -151,6 +147,6 @@ def messages(message):
     except Exception as e:
         print(e, 145)
         db.setAns(message.chat.id, 0)
-
+    db.countUsers()
 
 bot.polling()
