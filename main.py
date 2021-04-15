@@ -4,7 +4,7 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton, \
 from database import DataBase as DB
 from analyzer import DostN as NN
 
-bot = telebot.TeleBot('1727515629:AAHc2_h5XxrvRM6QFhdGEVdLtWABn97ZWQ0')
+bot = telebot.TeleBot('1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o')
 
 mark = InlineKeyboardMarkup(row_width=3)
 one = InlineKeyboardButton('1', callback_data=1)
@@ -33,7 +33,7 @@ def start(message):
                                       f'других, когда создатели сделают Калейдоскоп Душ. Хочешь узнать обо мне больше '
                                       f'заходи на сайт: '
                                       f'http://reflexo-ai.tilda.ws/page18650718.html', reply_markup=begin)
-    db.setAns(message.chat.id, 0)
+    db.setAns(message.chat.id, 1)
     # (message.from_user.first_name)
     db.AddUser(message.from_user.id)
     db.AddID(message.chat.id)
