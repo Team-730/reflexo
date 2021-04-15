@@ -5,7 +5,7 @@ from database import DataBase as DB
 from analyzer import DostN as NN
 import puzzle_generator as pg
 
-bot = telebot.TeleBot('1727515629:AAHc2_h5XxrvRM6QFhdGEVdLtWABn97ZWQ0')
+bot = telebot.TeleBot('1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o')
 db = DB()
 
 mark = InlineKeyboardMarkup(row_width=3)
@@ -148,7 +148,7 @@ def messages(message):
         else:
             bot.send_message(message.chat.id, 'До новых встреч.')
         if ans == 4 or ans == 9:
-            pg()
+            pg(db.getMatrix())
     except Exception as e:
         print(e, 145)
         db.setAns(message.chat.id, 0)

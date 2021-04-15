@@ -1,8 +1,42 @@
 import svgwrite
 from xml.dom import minidom
 import random
-
+import subprocess
 import os
+
+stickers = {
+    '111': 'yellow.jpg',
+    '112': 'yellow.jpg',
+    '121': 'yellow.jpg',
+    '122': 'pink.jpg',
+    '131': 'pink.jpg',
+    '132': 'pink.jpg',
+    '113': 'purple.jpg',
+    '123': 'purple.jpg',
+    # '133'
+    # '211'
+    # '221'
+    # '222'
+    # '232'
+    # '212'
+    # '213'
+    # '223'
+    # '233'
+    # '231'
+    # '311'
+    # '321'
+    # '312'
+    # '322'
+    # '332'
+    # '331'
+    # '333'
+    # '323'
+    # '313'
+}
+
+def get_sticker(q1, q2, q3):
+    key = q1 + q2 + q3
+    return stickers[key]
 
 def get_puzzle(matrix):
     random.seed(42)
@@ -36,7 +70,7 @@ def get_puzzle(matrix):
             # testCircle.add(dwg.circle((5*mm, 10*mm), 10*mm))
             color = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
             puzzle_num = random.randint(0, max_puzzles)
-            img = dwg.image("logo-reflexo.jpg", 
+            img = dwg.image(get_sticker(matrix[i*10+j]), 
                 transform=f"translate({i*l-d},{j*l-d})",
                 width=l, height=l,
                 clip_path=f"url(#my_clip_path{puzzle_num})")
@@ -57,3 +91,6 @@ def get_puzzle(matrix):
     # dwg.add(p)
 
     dwg.save()
+    # bashCommand = 'sshpass -p "F3Btfet&" scp x1.svg tn23m_reflexo@reflexo.space:x12.svg'
+    # process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+    # output, error = process.communicate()

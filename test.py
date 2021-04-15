@@ -1,3 +1,3 @@
-import database as DB
+from database import DataBase as DB
 db = DB()
-print(db.getMatrix('1'))
+print(db.getMatrix())

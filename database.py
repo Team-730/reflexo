@@ -159,20 +159,10 @@ class DataBase:
             print(e, 163)
         self.db.commit()
 
-    def getMatrix(self, num):
-        self.sql.execute(f" SELECT param1, param2, param3, positive, negative, neutral, ",
-                         f"id FROM matrix WHERE rowid = {num} ")
-        mar = self.sql.fetchone()
-        matrix = {
-            'id': mar[6],
-            'param1': mar[0],
-            'param2': mar[1],
-            'param3': mar[2],
-            'positive': mar[3],
-            'negative': mar[4],
-            'neutral': mar[5],
-        }
-        return matrix
+    def getMatrix(self):
+        self.sql.execute(f" SELECT param1, param2, param3, positive, negative, neutral, id FROM matrix")
+        mar = self.sql.fetchall()
+        return mar
 
     def AddID(self, MID):
         try:
