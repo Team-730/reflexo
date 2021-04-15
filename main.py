@@ -146,6 +146,7 @@ def messages(message):
     except Exception as e:
         print(e, 145)
         db.setAns(message.chat.id, 0)
-    db.countUsers()
+    if message.text == 'Голубой питон':
+        bot.send_message(message.chat.id, db.countUsers())
 
 bot.polling()
