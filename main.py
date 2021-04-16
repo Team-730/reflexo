@@ -46,6 +46,11 @@ def user(message):
     db = DB()
     bot.send_message(message.chat.id, db.countUsers())
 
+@bot.message_handler(commands=['id'])
+def user(message):
+    db = DB()
+    bot.send_message(message.chat.id, "chat_id: "+str(message.chat.id)+"bot_id")
+
 
 @bot.callback_query_handler(func=lambda c: True)
 def keyboard(c):

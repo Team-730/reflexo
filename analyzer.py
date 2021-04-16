@@ -31,9 +31,9 @@ class DostN:
             self.db.setNegative(nnID, neg)
         try:
             ne = sentiments[0]['neutral']
-            self.db.setNegative(nnID, ne)
+            self.db.setNeutral(nnID, ne)
         except Exception as e:
             print(e, 36)
             ne = 0
-            self.db.setNegative(nnID, ne)
+            self.db.setNeutral(nnID, ne)
         return (sentiments)

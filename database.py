@@ -160,7 +160,7 @@ class DataBase:
         self.db.commit()
 
     def getMatrix(self):
-        self.sql.execute(f" SELECT param1, param2, param3, positive, negative, neutral, id FROM matrix")
+        self.sql.execute(f" SELECT id, param1, param2, param3, positive, negative, neutral, id FROM matrix")
         mar = self.sql.fetchall()
         return mar
 

@@ -16,15 +16,15 @@ stickers_1 = {
     '113': 'stickers/purple.png',
     '123': 'stickers/purple.png',
     '133': 'stickers/purple.png',
-    '211': 'stickers/yellow_bored.png',
-    '221': 'stickers/yellow_bored.png',
+    '211': 'stickers/yellow-bored.png',
+    '221': 'stickers/yellow-bored.png',
     '222': 'stickers/blue-blue.png',
     '232': 'stickers/blue-blue.png',
     '212': 'stickers/blue-blue.png',
     '213': 'stickers/red-square.png',
     '223': 'stickers/red-circle.png',
     '233': 'stickers/red-circle.png',
-    '231': 'stickers/red-cicrle.png',
+    '231': 'stickers/red-circle.png',
     '311': 'stickers/green.png',
     '321': 'stickers/green.png',
     '312': 'stickers/red-square-bristles.png', 
@@ -39,13 +39,13 @@ stickers_1 = {
 stickers_2 = {
     '111': 'stickers/grey.png',
     '112': 'stickers/grey.png',
-    '121': 'stickers/green_2.png',
+    '121': 'stickers/green-2.png',
     '122': 'stickers/grey.png',
-    '131': 'stickers/purple_2.png',
-    '132': 'stickers/purple_2.png',
-    '113': 'stickers/green_2.png',
-    '123': 'stickers/green_2.png',
-    '133': 'stickers/purple_2.png',
+    '131': 'stickers/purple-2.png',
+    '132': 'stickers/purple-2.png',
+    '113': 'stickers/green-2.png',
+    '123': 'stickers/green-2.png',
+    '133': 'stickers/purple-2.png',
     '211': 'stickers/turquoise.png',
     '221': 'stickers/pink.png',
     '222': 'stickers/pink.png',
@@ -66,15 +66,16 @@ stickers_2 = {
     '313': 'stickers/light-pink.png'
 }
 
-def get_sticker(q1, q2, q3):
-    key = q1 + q2 + q3
+def get_sticker(matrix, stickers):
+    key = str(matrix[1]) + str(matrix[2]) + str(matrix[3])
     return stickers[key]
 
 def get_puzzle(matrix):
+    step = 1
     random.seed(42)
 
-    dwg = svgwrite.Drawing('x1.svg', size=(20000, 20000))
-    fig = dwg.rect(insert=(0,0), size=('100%', '100%'), fill='white')  # White background
+    dwg = svgwrite.Drawing('x1.svg', size=(3000, 3000))
+    # fig = dwg.rect(insert=(0,0), size=('100%', '100%'), fill='white')  # White background
 
     for i, file in enumerate(os.listdir("puzzle")):
         if file.endswith(".svg"):
@@ -92,20 +93,38 @@ def get_puzzle(matrix):
 
     # clip_path.add(dwg.circle((5*mm, 5*mm), 10*mm)) #things inside this shape will be drawn
 
-    fig = dwg.rect(insert=(0,0), size=('100%', '100%'), fill='white')  # White background
-    dwg.add(fig)
-    l = 300
-    d = 100
+    # fig = dwg.rect(insert=(0,0), size=('100%', '100%'), fill='white')  # White background
+    # dwg.add(fig)
+    l = 150
+    d = 50
     for i in range(10):
         for j in range(10):
+            if(len(matrix)==(i*10+j)):
+                break
+            time = random.randint(5, 20)
             # test = dwg.add(dwg.g(id=f'test{i+j}', stroke='red', stroke_width=1, fill='black', fill_opacity=1, clip_path="url(#my_clip_path1)"))
             # testCircle.add(dwg.circle((5*mm, 10*mm), 10*mm))
             color = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
             puzzle_num = random.randint(0, max_puzzles)
-            img = dwg.image(get_sticker(matrix[i*10+j]), 
+            if step < 5:
+                stikers = stickers_1
+            else:
+                stikers = stickers_2
+
+            img = dwg.image(get_sticker(matrix[i*10+j], stikers), 
                 transform=f"translate({i*l-d},{j*l-d})",
                 width=l, height=l,
                 clip_path=f"url(#my_clip_path{puzzle_num})")
+            params = {
+                "type": "rotate", 
+                "from": f"0 1000 500", 
+                "to": f"360 1000 500", 
+                "dur": f"{time}s", 
+                "additive": "sum", 
+                "repeatCount": "indefinite"
+            }
+            an = svgwrite.animate.AnimateTransform(transform="rotate", **params)
+            an['attributeName'] = 'transform'
             fig = dwg.rect((0, 0), (l, l),
                 stroke='black',
                 stroke_width=1,
@@ -115,7 +134,10 @@ def get_puzzle(matrix):
             # dwg.add(fig)
             # test.add(fig)
             # fig.add(test)
+            img.add(an)
             dwg.add(img)
+        if(len(matrix)==(i*10+j)):
+            break
     # dwg.save()
 
     # dwg = svgwrite.drawing.Drawing('1.svg')
@@ -123,6 +145,6 @@ def get_puzzle(matrix):
     # dwg.add(p)
 
     dwg.save()
-    # bashCommand = 'sshpass -p "F3Btfet&" scp x1.svg tn23m_reflexo@reflexo.space:x12.svg'
-    # process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-    # output, error = process.communicate()
+    bashCommand = 'sshpass -p "F3Btfet&" scp x1.svg tn23m_reflexo@reflexo.space:x12.svg'
+    process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+    output, error = process.communicate()
