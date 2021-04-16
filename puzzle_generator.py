@@ -67,6 +67,12 @@ stickers_2 = {
 }
 
 def get_sticker(matrix, stickers):
+    if matrix[1]== 0:
+        matrix[1] = 2
+    if matrix[2] == 0:
+        matrix[2] = 2
+    if matrix[3] == 0:
+        matrix[3] = 2
     key = str(matrix[1]) + str(matrix[2]) + str(matrix[3])
     return stickers[key]
 
