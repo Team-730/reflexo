@@ -3,35 +3,67 @@ from xml.dom import minidom
 import random
 import subprocess
 import os
+from database import DataBase as DB
 
-stickers = {
-    '111': 'yellow.jpg',
-    '112': 'yellow.jpg',
-    '121': 'yellow.jpg',
-    '122': 'pink.jpg',
-    '131': 'pink.jpg',
-    '132': 'pink.jpg',
-    '113': 'purple.jpg',
-    '123': 'purple.jpg',
-    # '133'
-    # '211'
-    # '221'
-    # '222'
-    # '232'
-    # '212'
-    # '213'
-    # '223'
-    # '233'
-    # '231'
-    # '311'
-    # '321'
-    # '312'
-    # '322'
-    # '332'
-    # '331'
-    # '333'
-    # '323'
-    # '313'
+db = DB()
+stickers_1 = {
+    '111': 'stickers/yellow.png',
+    '112': 'stickers/yellow.png',
+    '121': 'stickers/yellow.png',
+    '122': 'stickers/pink.png',
+    '131': 'stickers/pink.png',
+    '132': 'stickers/pink.png',
+    '113': 'stickers/purple.png',
+    '123': 'stickers/purple.png',
+    '133': 'stickers/purple.png',
+    '211': 'stickers/yellow_bored.png',
+    '221': 'stickers/yellow_bored.png',
+    '222': 'stickers/blue-blue.png',
+    '232': 'stickers/blue-blue.png',
+    '212': 'stickers/blue-blue.png',
+    '213': 'stickers/red-square.png',
+    '223': 'stickers/red-circle.png',
+    '233': 'stickers/red-circle.png',
+    '231': 'stickers/red-cicrle.png',
+    '311': 'stickers/green.png',
+    '321': 'stickers/green.png',
+    '312': 'stickers/red-square-bristles.png', 
+    '322': 'stickers/red-square-bristles.png',
+    '332': 'stickers/red-square-bristles.png',
+    '331': 'stickers/red-square-bristles.png',
+    '333': 'stickers/black-polygon.png',
+    '323': 'stickers/black-polygon.png',
+    '313': 'stickers/black-polygon.png'
+}
+
+stickers_2 = {
+    '111': 'stickers/.png',
+    '112': 'stickers/.png',
+    '121': 'stickers/.png',
+    '122': 'stickers/.png',
+    '131': 'stickers/.png',
+    '132': 'stickers/.png',
+    '113': 'stickers/.png',
+    '123': 'stickers/.png',
+    '133': 'stickers/.png',
+    '211': 'stickers/.png',
+    '221': 'stickers/.png',
+    '222': 'stickers/.png',
+    '232': 'stickers/.png',
+    '212': 'stickers/.png',
+    '213': 'stickers/.png',
+    '223': 'stickers/.png',
+    '233': 'stickers/.png',
+    '231': 'stickers/.png',
+    '311': 'stickers/.png',
+    '321': 'stickers/.png',
+    '312': 'stickers/.png', 
+    '322': 'stickers/.png',
+    '332': 'stickers/.png',
+    '331': 'stickers/.png',
+    '333': 'stickers/.png',
+    '323': 'stickers/.png',
+    '313': 'stickers/.png'
 }
 
 def get_sticker(q1, q2, q3):
