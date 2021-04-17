@@ -3,9 +3,9 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton, \
     InlineKeyboardMarkup, InlineKeyboardButton
 from database import DataBase as DB
 from analyzer import DostN as NN
-import puzzle_generator as pg
+from puzzle_generator import get_puzzle as pg
 
-bot = telebot.TeleBot('1715413219:AAG-psejdspI_Q1HsXq6nMbhF6H80AQXe7o')
+bot = telebot.TeleBot('1727515629:AAF0rRwGomQvH6LURb60uCYPpQolXIn_qmw')
 db = DB()
 
 mark = InlineKeyboardMarkup(row_width=3)

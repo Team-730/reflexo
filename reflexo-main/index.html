@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta http-equiv="refresh" content="30"> -->
+    <title>Reflexo</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body id="content">
+    <!-- <div class="logo">
+            <img class="logo-img" src="logo-reflexo.jpg">
+        </div> -->
+    <div class="svg"
+        style="background-image: url(bkg_animate.gif); background-repeat: no-repeat; background-size:contain; background-position: center;">
+        <object id="svg" type="image/svg+xml" data="x1.svg" width="100%" height="100%">
+            Your browser does not support SVG???
+        </object>
+    </div>
+
+    <script type="text/javascript">
+        var elem = document.getElementById('svg');
+        // let fullscreen = confirm("Войти в полноэкранны режим?");
+        elem.onclick = function () {
+            if (fullscreen) {
+                document.getElementById('content').requestFullscreen();
+            }
+        }
+        // while (true) {
+        setTimeout(() => { location.reload(); }, 100000);
+        // }
+        // Активируем этот элемент на весь экранs
+    </script>
+</body>
+
+</html>
