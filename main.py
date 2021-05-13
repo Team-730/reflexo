@@ -5,7 +5,7 @@ from database import DataBase as DB
 from analyzer import DostN as NN
 from puzzle_generator import get_puzzle as pg
 
-bot = telebot.TeleBot('1727515629:AAF0rRwGomQvH6LURb60uCYPpQolXIn_qmw')
+bot = telebot.TeleBot('')
 db = DB()
 
 mark = InlineKeyboardMarkup(row_width=3)
