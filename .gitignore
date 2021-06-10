@@ -1,2 +1,5 @@
 #Adding folders that have used only in IDEs
-.vs-code
+.vscode
+__pycache__
+#Add private token
+token.txt
